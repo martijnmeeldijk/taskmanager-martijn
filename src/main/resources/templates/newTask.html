@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments/head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="fragments/header"></nav>
+
+
+<main>
+    <h1 th:text="${title}"></h1>
+
+    <!--<form action="#" th:action="@{/tasks/create}" th:object="${task}" method="post">
+        <input type="text" th:field="*{title}" />
+        <input type="text" th:field="*{description}" />
+        <input type="datetime-local" th:field="*{dateTime}" />
+
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>-->
+    <div class="form-container">
+        <form action="#" th:action="${edit}? @{/tasks/edit} : @{/tasks/create}" th:object="${task}" method="post"
+              class="create-task-form">
+
+            <div class="form-group">
+
+                <label for="title">Title</label>
+                <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</span>
+                <input th:field="*{title}" type="text" class="form-control" id="title" aria-describedby="Title"
+                       placeholder="Title">
+                <small class="form-text text-muted">The title of your amazing task</small>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
+                <input th:field="*{description}" type="text" class="form-control" id="description"
+                       placeholder="Description">
+                <small class="form-text text-muted">Describe your amazing task in detail</small>
+            </div>
+            <div class="form-group">
+                <label for="dateTime">Due date</label>
+                <span class="error" th:if="${#fields.hasErrors('dateTime')}" th:errors="*{dateTime}">DateTime Error</span>
+                <input th:field="*{dateTime}" type="datetime-local" class="form-control" id="dateTime"
+                       placeholder="Due date">
+                <small class="form-text text-muted">When is your amazing task taking place?</small>
+            </div>
+            <input th:field="*{id}" type="hidden" class="form-control" aria-describedby="Title"
+                   placeholder="Title">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+
+
+</body>
+
+</html>

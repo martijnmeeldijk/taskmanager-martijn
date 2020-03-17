@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments/head">
+    <meta charset="UTF-8">
+    <title>Planner</title>
+</head>
+<body>
+<nav th:replace="fragments/header"></nav>
+
+<main>
+    <h1 th:text="${task.title}"></h1>
+    <table class="table">
+        <!--<tr>
+            <th scope="col">Name</th>
+            <th scope="col">Time</th>
+
+
+        </tr>-->
+        <tr>
+            <td>Title</td>
+            <td th:text="${task.title}"></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td th:text="${task.description}"></td>
+        </tr>
+        <tr>
+            <td>Due Date</td>
+            <td th:text="${task.dateTimeString}"></td>
+        </tr>
+
+    </table>
+
+    <h2 th:if="${!subtasks.empty}">Subtasks</h2>
+    <table class="table">
+    <tr th:each="subtask : ${subtasks}">
+        <td th:text="${subtask.title}"></td>
+        <td th:text="${subtask.description}"></td>
+        <td>
+            <a th:href="@{/tasks/{id}/sub/delete/{subtitle} (id=${task.id}, subtitle=${subtask.title})}">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        </td>
+    </tr>
+    <tr th:if="${subtasks == null}">
+        <td>No tasks</td>
+        <td>No tasks</td>
+    </tr>
+    </table>
+    <a class="btn btn-primary" th:href="@{/tasks/{id}/sub/create(id=${task.id})}" role="button">Create new subtask</a>
+</main>
+
+</body>
+</html>

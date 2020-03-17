@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments/head">
+    <meta charset="UTF-8">
+    <title>Planner</title>
+</head>
+<body>
+<nav th:replace="fragments/header"></nav>
+
+<main>
+    <table class="table">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Time</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+
+
+        </tr>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.title}"></td>
+            <td th:text="${task.dateTimeString}"></td>
+            <td><a th:href="@{/tasks/{id}(id=${task.id})}">details</a></td>
+            <td>
+                <a th:href="@{/tasks/delete/{id}(id=${task.id})}">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/tasks/edit/{id}(id=${task.id})}">
+                    <i class="far fa-edit"></i>
+                </a>
+            </td>
+        </tr>
+        <tr th:if="${tasks == null}">
+            <td>No tasks</td>
+            <td>No tasks</td>
+        </tr>
+
+        <a class="btn btn-primary" href="/tasks/new" role="button">Create new task</a>
+    </table>
+</main>
+
+</body>
+</html>

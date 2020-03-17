@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments/head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="fragments/header"></nav>
+
+
+<main>
+    <h1>New Subtask</h1>
+
+    <!--<form action="#" th:action="@{/tasks/create}" th:object="${task}" method="post">
+        <input type="text" th:field="*{title}" />
+        <input type="text" th:field="*{description}" />
+        <input type="datetime-local" th:field="*{dateTime}" />
+
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>-->
+
+    <div class="form-container">
+        <form action="#"  th:action="${edit}? @{/tasks/{id}/sub/edit(id=${task.id})} : @{/tasks/{id}/sub/create(id=${task.id})}" th:object="${subtask}" method="post" class="create-task-form">
+
+            <div class="form-group">
+                <label for="title">Title</label>
+                <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</span>
+                <input th:field="*{title}" type="text" class="form-control" id="title" aria-describedby="Title"
+                       placeholder="Title">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your subtasks with anyone
+                    else.</small>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
+                <input th:field="*{description}" type="text" class="form-control" id="description"
+                       placeholder="Description">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+
+
+</body>
+
+</html>
