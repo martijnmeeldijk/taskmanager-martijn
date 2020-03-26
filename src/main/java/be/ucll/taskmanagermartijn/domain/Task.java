@@ -3,6 +3,9 @@ package be.ucll.taskmanagermartijn.domain;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -18,12 +21,15 @@ TODO
 
 */
 
+@Entity
 public class Task {
     @Size(min=2, max=30)
     private String title;
     private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dateTime;
+    @Id
+    @GeneratedValue
     private int id;
     private String dateTimeString;
     private ArrayList<Subtask> subtasks;
@@ -32,33 +38,6 @@ public class Task {
     public Task() {
         subtasks = new ArrayList<>();
     }
-
-    public Task(int id, String title, String description, int day, int month, int year, int hour, int minute){
-        this.id = id;
-        this.description = description;
-        this.title = title;
-        if(!isValidDate(day, month, year, hour, minute)) throw new IllegalArgumentException("DateTime is not valid");
-        this.dateTime = LocalDateTime.of(year,month,day, hour, minute);
-        this.dateTimeString = DateTimeFormatter.ISO_DATE.format(dateTime) + " " + DateTimeFormatter.ISO_TIME.format(dateTime);
-        subtasks = new ArrayList<>();
-    }
-    public Task(int id, String title, String description, LocalDateTime time){
-        this.id = id;
-        this.description = description;
-        this.dateTime = time;
-        this.title = title;
-        this.dateTimeString = DateTimeFormatter.ISO_DATE.format(dateTime) + " " + DateTimeFormatter.ISO_TIME.format(dateTime);
-        subtasks = new ArrayList<>();
-    }
-    public Task(String title, String description, LocalDateTime time){
-        this.id = id;
-        this.description = description;
-        this.dateTime = time;
-        this.title = title;
-        this.dateTimeString = DateTimeFormatter.ISO_DATE.format(dateTime) + " " + DateTimeFormatter.ISO_TIME.format(dateTime);
-        subtasks = new ArrayList<>();
-    }
-
 
     private boolean isValidDate(int day, int month, int year, int hour, int minute){
         return (day < 32 && day > 0 && month < 13 && month > 0 && hour >=0 && hour < 24 && minute >=0 && minute <61);

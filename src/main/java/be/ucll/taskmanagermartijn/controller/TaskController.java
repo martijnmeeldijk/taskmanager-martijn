@@ -2,7 +2,7 @@ package be.ucll.taskmanagermartijn.controller;
 
 import be.ucll.taskmanagermartijn.domain.Subtask;
 import be.ucll.taskmanagermartijn.domain.Task;
-import be.ucll.taskmanagermartijn.domain.Tasks;
+import be.ucll.taskmanagermartijn.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import javax.validation.Valid;
 @Controller
 public class TaskController {
     @Autowired
-    Tasks tasks;
+    TaskService tasks;
 
     @GetMapping("/")
     public String root() {
@@ -32,15 +32,15 @@ public class TaskController {
     }
     @GetMapping("/tasks/{id}")
     public String printDetails(Model model, @PathVariable("id") int id) {
-        model.addAttribute("task", tasks.get(id));
-        model.addAttribute("subtasks", tasks.get(id).getSubtasks());
+        model.addAttribute("task", tasks.getTaskById(id));
+        model.addAttribute("subtasks", tasks.getTaskById(id).getSubtasks());
         return "details";
     }
 
     /* DELETE TASKS*/
     @GetMapping("/tasks/delete/{id}")
     public String deleteTask(Model model, @PathVariable("id") int id) {
-        tasks.delete(id);
+        tasks.deleteTaskById(id);
         return "redirect:/tasks";
     }
 
@@ -64,7 +64,7 @@ public class TaskController {
     /* EDIT TASKS */
     @GetMapping("/tasks/edit/{id}")
     public String editPage(Model model, @PathVariable("id") int id) {
-        model.addAttribute(tasks.get(id));
+        model.addAttribute(tasks.getTaskById(id));
         model.addAttribute("title", "Edit Task");
         model.addAttribute("edit", true);
         return "newTask";
@@ -72,7 +72,7 @@ public class TaskController {
     @PostMapping("/tasks/edit")
     public String edit(Task task) {
 
-        tasks.edit(task);
+        tasks.editTask(task);
 
         return "redirect:/tasks";
     }
@@ -80,7 +80,7 @@ public class TaskController {
     /* SUBTASKS */
     @GetMapping("/tasks/{id}/sub/create")
     public String addSubTaskPage(Model model, @PathVariable("id") int id) {
-        model.addAttribute("task", tasks.get(id));
+        model.addAttribute("task", tasks.getTaskById(id));
         model.addAttribute("subtask", new Subtask());
 
         return "newSubtask";
@@ -88,7 +88,7 @@ public class TaskController {
 
     @PostMapping("/tasks/{id}/sub/create")
     public String addSubTask(Model model, @PathVariable("id") int id, @ModelAttribute @Valid Subtask subtask, BindingResult bindingResult) {
-        model.addAttribute("task", tasks.get(id));
+        model.addAttribute("task", tasks.getTaskById(id));
         if(bindingResult.hasErrors()){
             return "newSubtask";
         }
@@ -98,8 +98,8 @@ public class TaskController {
 
     @GetMapping("/tasks/{id}/sub/delete/{subtitle}")
     public String deleteSubtask(Model model, @PathVariable("id") int id, @PathVariable("subtitle") String subtitle) {
-        tasks.get(id).deleteSubtask(subtitle);
-        model.addAttribute("task", tasks.get(id));
+        tasks.getTaskById(id).deleteSubtask(subtitle);
+        model.addAttribute("task", tasks.getTaskById(id));
         model.addAttribute("subtask", new Subtask());
 
         return "redirect:/tasks/" + id;
