@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create head</title>
+</head>
+<body>
+<h1>Create head</h1>
+<form method="post" action="/head" th:object="${headDTO}">
+    <p th:text="${#fields.globalErrors()}"></p>
+    <div>
+        <label for="owner">Owner:</label>
+        <input type="text" th:field="*{owner}">
+        <p th:errors="*{owner}"></p>
+    </div>
+    <div>
+        <input id="decapitated" name="decapitated" type="checkbox" th:field="*{decapitated}">
+        <label for="decapitated">Decapitated</label>
+    </div>
+    <div>
+        <label for="dateAndTimeOfBeheading">Date and time of beheading</label>
+        <input type="datetime-local" th:field="*{dateAndTimeOfBeheading}">
+    </div>
+    <input type="submit" value="Create head">
+</form>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant listing</title>
+</head>
+<body>
+<h4>Restaurants</h4>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Rating</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="restaurant : ${restaurants}">
+        <td th:text="*{restaurant.name}"></td>
+        <td th:text="*{restaurant.address}"></td>
+        <td th:text="*{restaurant.rating}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<form method="post" action="/restaurant">
+    <h4>Add restaurant</h4>
+    <div>
+        <label for="name">Name: </label>
+        <input type="text" name="name" id="name">
+    </div>
+    <div>
+        <label for="address">Address: </label>
+        <input type="text" name="address" id="address">
+    </div>
+    <div>
+        <label for="rating">Rating: </label>
+        <input type="number" name="rating" id="rating" step=".1">
+    </div>
+    <input type="submit" value="Add restaurant">
+</form>
+
+</body>
+</html>

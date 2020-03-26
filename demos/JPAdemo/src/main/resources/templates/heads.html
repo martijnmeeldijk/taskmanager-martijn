@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Heads</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Head owner</th>
+        <th>Decapitated</th>
+    </tr>
+    <tr th:each="head : ${heads}">
+        <td th:text="${head.owner}"></td>
+        <td th:text="${head.decapitated}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
