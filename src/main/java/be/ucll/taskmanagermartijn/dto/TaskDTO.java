@@ -96,9 +96,9 @@ public class TaskDTO {
         subtasks.remove(subtask1);
 
     }
-    public SubtaskDTO getSubtask(String title){
+    public SubtaskDTO getSubtask(int id){
         for(SubtaskDTO s : subtasks){
-            if(s.getTitle().equalsIgnoreCase(title)){
+            if(s.getId() == id){
                 return s;
             }
         }
@@ -111,9 +111,6 @@ public class TaskDTO {
     }
 
     public void setSubtasks(List<SubtaskDTO> subtasks){
-        for(SubtaskDTO s : subtasks){
-            s.setTask(this);
-        }
         this.subtasks = subtasks;
     }
 

@@ -68,15 +68,15 @@ public class TaskController {
     /* EDIT TASKS */
     @GetMapping("/tasks/edit/{id}")
     public String editPage(Model model, @PathVariable("id") int id) {
-        model.addAttribute(tasks.getTaskById(id));
+        model.addAttribute(tasks.getTaskDTOById(id));
         model.addAttribute("title", "Edit Task");
         model.addAttribute("edit", true);
         return "newTask";
     }
     @PostMapping("/tasks/edit")
-    public String edit(Task task) {
+    public String edit(TaskDTO task) {
 
-        tasks.editTask(task);
+        tasks.editTaskByTaskDTO(task);
 
         return "redirect:/tasks";
     }
@@ -84,25 +84,27 @@ public class TaskController {
     /* SUBTASKS */
     @GetMapping("/tasks/{id}/sub/create")
     public String addSubTaskPage(Model model, @PathVariable("id") int id) {
-        model.addAttribute("task", tasks.getTaskById(id));
+        model.addAttribute("task", tasks.getTaskDTOById(id));
         model.addAttribute("subtask", new SubtaskDTO());
 
         return "newSubtask";
     }
 
     @PostMapping("/tasks/{id}/sub/create")
-    public String addSubtask(Model model, @PathVariable("id") int id, @ModelAttribute @Valid Subtask subtask, BindingResult bindingResult) {
-        model.addAttribute("task", tasks.getTaskById(id));
+    public String addSubtask(Model model, @PathVariable("id") int id, @ModelAttribute @Valid SubtaskDTO subtask, BindingResult bindingResult) {
+
+
         if(bindingResult.hasErrors()){
             return "newSubtask";
         }
         tasks.addSubtask(id, subtask);
+        model.addAttribute("task", tasks.getTaskDTOById(id));
         return "redirect:/tasks/{id}";
     }
 
     @GetMapping("/tasks/{id}/sub/delete/{subtaskId}")
-    public String deleteSubtask(Model model, @PathVariable("id") int id, @PathVariable("subtaskId") String subtaskId) {
-        tasks.getTaskById(id).deleteSubtask(subtaskId);
+    public String deleteSubtask(Model model, @PathVariable("id") int id, @PathVariable("subtaskId") int subtaskId) {
+        tasks.deleteSubtask(id, subtaskId);
         model.addAttribute("task", tasks.getTaskById(id));
         model.addAttribute("subtask", new Subtask());
 

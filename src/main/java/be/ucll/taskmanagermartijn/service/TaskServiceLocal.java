@@ -41,7 +41,6 @@ public class TaskServiceLocal implements TaskService{
         subtask1.setTitle("ongelovigen straffen");
         subtask1.setDescription("ja je hebt het gehoord");
         subtask1.setId(1);
-        subtask1.setTask(task1);
         task1.addSubtask(subtask1);
         tasks.put(task1.getId(), task1);
         tasks.put(task2.getId(), task2);
@@ -63,7 +62,6 @@ public class TaskServiceLocal implements TaskService{
                 dto.setId(h.getId());
                 dto.setTitle(h.getTitle());
                 dto.setDescription(h.getDescription());
-                dto.setTask(taskDTO);
                 return dto;
             }).collect(Collectors.toList())
             );
@@ -75,7 +73,7 @@ public class TaskServiceLocal implements TaskService{
         return list;
     }
 
-    public TaskDTO getTaskById(int id) {
+    public TaskDTO getTaskDTOById(int id) {
         TaskDTO taskDTO = new TaskDTO();
         Task t = tasks.get(id);
         taskDTO.setId(t.getId());
@@ -88,7 +86,6 @@ public class TaskServiceLocal implements TaskService{
                     dto.setId(h.getId());
                     dto.setTitle(h.getTitle());
                     dto.setDescription(h.getDescription());
-                    dto.setTask(taskDTO);
                     return dto;
                 }).collect(Collectors.toList())
         );
@@ -106,6 +103,8 @@ public class TaskServiceLocal implements TaskService{
         task.setId(maxId() + 1);
         tasks.put(task.getId(), task);
     }
+
+
 
     public void addTask(String title, String description, LocalDateTime dateTime){
         int id = maxId() + 1;
@@ -139,7 +138,22 @@ public class TaskServiceLocal implements TaskService{
 
 
     }
-    public void addSubtask(int mainTaskId, Subtask subtask){
-        tasks.get(mainTaskId).addSubtask(subtask);
+    public void addSubtask(int mainTaskId, SubtaskDTO subtaskDTO){
+        /*tasks.get(mainTaskId).addSubtask(subtask);*/
+    }
+
+    @Override
+    public void editTaskByTaskDTO(TaskDTO taskDTO) {
+
+    }
+
+    @Override
+    public void deleteSubtask(int id, int subtaskId) {
+
+    }
+
+    @Override
+    public Task getTaskById(int id) {
+        return null;
     }
 }

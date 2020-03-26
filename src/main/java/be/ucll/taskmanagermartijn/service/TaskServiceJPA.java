@@ -71,14 +71,31 @@ public class TaskServiceJPA implements TaskService {
     }
 
     @Override
-    public TaskDTO getTaskById(int id) {
+    public TaskDTO getTaskDTOById(int id) {
         Task task = repository.getTaskById(id);
         TaskDTO dto = new TaskDTO();
         dto.setId(task.getId());
         dto.setTitle(task.getTitle());
         dto.setDescription(task.getDescription());
         dto.setDateTime(task.getDateTime());
+
+        dto.setSubtasks(task.getSubtasks()
+                .stream().map(s -> {
+                    SubtaskDTO subtaskDTO = new SubtaskDTO();
+                    subtaskDTO.setId(s.getId());
+                    subtaskDTO.setTitle(s.getTitle());
+                    subtaskDTO.setDescription(s.getDescription());
+
+                    return subtaskDTO;
+                }).collect(Collectors.toList())
+        );
+
         return dto;
+    }
+
+    public Task getTaskById(int id) {
+
+        return repository.getTaskById(id);
     }
 
     @Override
@@ -104,15 +121,54 @@ public class TaskServiceJPA implements TaskService {
 
     @Override
     @Transactional
-    public void editTask(Task task) {
-        repository.deleteTaskById(task.getId());
+    public void editTaskByTaskDTO(TaskDTO taskDTO) {
+        Task task = new Task();
+        task.setId(taskDTO.getId());
+        task.setTitle(taskDTO.getTitle());
+        task.setDescription(taskDTO.getDescription());
+        task.setDateTime(taskDTO.getDateTime());
+
+        task.setSubtasks(taskDTO.getSubtasks()
+                .stream().map(s -> {
+                    Subtask subtask = new Subtask();
+                    subtask.setId(s.getId());
+                    subtask.setTitle(s.getTitle());
+                    subtask.setDescription(s.getDescription());
+
+                    return subtask;
+                }).collect(Collectors.toList())
+        );
         repository.save(task);
     }
 
     @Override
-    public void addSubtask(int mainTaskId, Subtask subtask) {
+    @Transactional
+    public void addSubtask(int mainTaskId, SubtaskDTO subtaskDTO) {
+        Subtask subtask = new Subtask();
+        subtask.setTitle(subtaskDTO.getTitle());
+        subtask.setDescription(subtaskDTO.getDescription());
+
+        Task task = getTaskById(mainTaskId);
+
+        task.addSubtask(subtask);
+
+        repository.save(task);
+    }
+
+    @Override
+    @Transactional
+    public void editTask(Task task) {
+
+
+        repository.deleteTaskById(task.getId());
+        repository.save(task);
 
     }
 
-
+    @Override
+    public void deleteSubtask(int id, int subtaskId) {
+        Task task = repository.getTaskById(id);
+        task.deleteSubtask(subtaskId);
+        repository.save(task);
+    }
 }

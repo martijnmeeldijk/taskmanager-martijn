@@ -13,16 +13,9 @@ public class SubtaskDTO {
     private int id;
 
 
-    @ManyToOne
-    private TaskDTO task;
 
-    public TaskDTO getTask() {
-        return task;
-    }
 
-    public void setTask(TaskDTO task) {
-        this.task = task;
-    }
+
 
 
 

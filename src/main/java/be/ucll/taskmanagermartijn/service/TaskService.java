@@ -2,6 +2,7 @@ package be.ucll.taskmanagermartijn.service;
 
 import be.ucll.taskmanagermartijn.domain.Subtask;
 import be.ucll.taskmanagermartijn.domain.Task;
+import be.ucll.taskmanagermartijn.dto.SubtaskDTO;
 import be.ucll.taskmanagermartijn.dto.TaskDTO;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,9 @@ public interface TaskService {
 
     void addTask(TaskDTO task);
 
-    public TaskDTO getTaskById(int id);
+    public TaskDTO getTaskDTOById(int id);
+
+    public Task getTaskById(int id);
 
     public void addTask(String title, String description, LocalDateTime dateTime);
 
@@ -23,6 +26,9 @@ public interface TaskService {
 
     public void editTask(Task task);
 
-    public void addSubtask(int mainTaskId, Subtask subtask);
+    public void addSubtask(int mainTaskId, SubtaskDTO subtaskDTO);
 
+    public void editTaskByTaskDTO(TaskDTO taskDTO);
+
+    void deleteSubtask(int id, int subtaskId);
 }

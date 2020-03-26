@@ -3,10 +3,7 @@ package be.ucll.taskmanagermartijn.domain;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -35,7 +32,7 @@ public class Task {
     private int id;
     private String dateTimeString;
 
-    @OneToMany(mappedBy="task")
+    @OneToMany(cascade= CascadeType.ALL)
     private List<Subtask> subtasks;
 
 
@@ -85,14 +82,13 @@ public class Task {
     }
 
     public void addSubtask(Subtask subtask){
-        subtask.setTask(this);
         subtasks.add(subtask);
     }
 
-    public void deleteSubtask(String subtask){
+    public void deleteSubtask(int id){
         Subtask subtask1 = null;
         for(Subtask s : subtasks){
-            if(s.getTitle().equalsIgnoreCase(subtask)){
+            if(s.getId() == id){
                 subtask1 = s;
 
             }
@@ -101,9 +97,9 @@ public class Task {
         subtasks.remove(subtask1);
 
     }
-    public Subtask getSubtask(String title){
+    public Subtask getSubtask(int id){
         for(Subtask s : subtasks){
-            if(s.getTitle().equalsIgnoreCase(title)){
+            if(s.getId() == id){
                 return s;
             }
         }
@@ -116,9 +112,6 @@ public class Task {
     }
 
     public void setSubtasks(List<Subtask> subtasks){
-        for(Subtask s : subtasks){
-            s.setTask(this);
-        }
         this.subtasks = subtasks;
     }
 
