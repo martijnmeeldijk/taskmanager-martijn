@@ -37,7 +37,7 @@
         <td th:text="${subtask.title}"></td>
         <td th:text="${subtask.description}"></td>
         <td>
-            <a th:href="@{/tasks/{id}/sub/delete/{subtitle} (id=${task.id}, subtitle=${subtask.title})}">
+            <a th:href="@{/tasks/{id}/sub/delete/{subtaskId} (id=${task.id}, subtaskId=${subtask.id})}">
                 <i class="fas fa-trash-alt"></i>
             </a>
         </td>

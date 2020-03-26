@@ -1,31 +1,26 @@
-package be.ucll.taskmanagermartijn.domain;
+package be.ucll.taskmanagermartijn.dto;
 
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
-@Entity
-public class Subtask {
+public class SubtaskDTO {
 
     @Size(min=2, max=30)
     private String title;
     private String description;
-    @Id
-    @GeneratedValue
     private int id;
 
-    @ManyToOne
-    private Task task;
 
-    public Task getTask() {
+    @ManyToOne
+    private TaskDTO task;
+
+    public TaskDTO getTask() {
         return task;
     }
 
-    public void setTask(Task task) {
+    public void setTask(TaskDTO task) {
         this.task = task;
     }
 
@@ -54,4 +49,5 @@ public class Subtask {
     public void setId(int id) {
         this.id = id;
     }
+
 }

@@ -7,5 +7,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-
+    void deleteTaskById(int id);
+    Task getTaskById(int id);
 }

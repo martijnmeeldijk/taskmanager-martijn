@@ -2,16 +2,18 @@ package be.ucll.taskmanagermartijn.service;
 
 import be.ucll.taskmanagermartijn.domain.Subtask;
 import be.ucll.taskmanagermartijn.domain.Task;
+import be.ucll.taskmanagermartijn.dto.TaskDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TaskService {
-    List<Task> getTasks();
 
-    void addTask(Task head);
+    List<TaskDTO> getTasks();
 
-    public Task getTaskById(int id);
+    void addTask(TaskDTO task);
+
+    public TaskDTO getTaskById(int id);
 
     public void addTask(String title, String description, LocalDateTime dateTime);
 

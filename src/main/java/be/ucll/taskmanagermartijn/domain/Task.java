@@ -6,11 +6,13 @@ import org.springframework.stereotype.Service;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.sun.tools.javac.util.Constants.format;
 /*
@@ -32,7 +34,9 @@ public class Task {
     @GeneratedValue
     private int id;
     private String dateTimeString;
-    private ArrayList<Subtask> subtasks;
+
+    @OneToMany(mappedBy="task")
+    private List<Subtask> subtasks;
 
 
     public Task() {
@@ -81,8 +85,10 @@ public class Task {
     }
 
     public void addSubtask(Subtask subtask){
+        subtask.setTask(this);
         subtasks.add(subtask);
     }
+
     public void deleteSubtask(String subtask){
         Subtask subtask1 = null;
         for(Subtask s : subtasks){
@@ -105,8 +111,15 @@ public class Task {
     }
 
 
-    public ArrayList<Subtask> getSubtasks() {
+    public List<Subtask> getSubtasks() {
         return subtasks;
+    }
+
+    public void setSubtasks(List<Subtask> subtasks){
+        for(Subtask s : subtasks){
+            s.setTask(this);
+        }
+        this.subtasks = subtasks;
     }
 
 }

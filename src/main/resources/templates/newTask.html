@@ -18,7 +18,7 @@
 
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>-->
     <div class="form-container">
-        <form action="#" th:action="${edit}? @{/tasks/edit} : @{/tasks/create}" th:object="${task}" method="post"
+        <form action="#" th:action="${edit}? @{/tasks/edit} : @{/tasks/create}" th:object="${taskDTO}" method="post"
               class="create-task-form">
 
             <div class="form-group">
