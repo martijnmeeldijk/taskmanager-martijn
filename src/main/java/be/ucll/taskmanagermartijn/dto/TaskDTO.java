@@ -1,4 +1,3 @@
-/*
 package be.ucll.taskmanagermartijn.dto;
 
 import be.ucll.taskmanagermartijn.domain.Subtask;
@@ -13,16 +12,17 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.sun.tools.javac.util.Constants.format;
-*/
 /*
 TODO
     Validation
     @Entity
     tags database : @Id, @GeneratedValue,
+*/
 
-*//*
+
 
 
 public class TaskDTO {
@@ -33,7 +33,7 @@ public class TaskDTO {
     private LocalDateTime dateTime;
     private int id;
     private String dateTimeString;
-    private ArrayList<Subtask> subtasks;
+    private List<SubtaskDTO> subtasks;
 
 
     public TaskDTO() {
@@ -81,12 +81,12 @@ public class TaskDTO {
         this.id = id;
     }
 
-    public void addSubtask(Subtask subtask){
+    public void addSubtask(SubtaskDTO subtask){
         subtasks.add(subtask);
     }
     public void deleteSubtask(String subtask){
-        Subtask subtask1 = null;
-        for(Subtask s : subtasks){
+        SubtaskDTO subtask1 = null;
+        for(SubtaskDTO s : subtasks){
             if(s.getTitle().equalsIgnoreCase(subtask)){
                 subtask1 = s;
 
@@ -96,8 +96,8 @@ public class TaskDTO {
         subtasks.remove(subtask1);
 
     }
-    public Subtask getSubtask(String title){
-        for(Subtask s : subtasks){
+    public SubtaskDTO getSubtask(String title){
+        for(SubtaskDTO s : subtasks){
             if(s.getTitle().equalsIgnoreCase(title)){
                 return s;
             }
@@ -106,9 +106,15 @@ public class TaskDTO {
     }
 
 
-    public ArrayList<Subtask> getSubtasks() {
+    public List<SubtaskDTO> getSubtasks() {
         return subtasks;
     }
 
+    public void setSubtasks(List<SubtaskDTO> subtasks){
+        for(SubtaskDTO s : subtasks){
+            s.setTask(this);
+        }
+        this.subtasks = subtasks;
+    }
+
 }
-*/

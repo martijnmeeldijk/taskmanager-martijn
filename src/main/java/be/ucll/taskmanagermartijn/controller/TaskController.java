@@ -2,8 +2,10 @@ package be.ucll.taskmanagermartijn.controller;
 
 import be.ucll.taskmanagermartijn.domain.Subtask;
 import be.ucll.taskmanagermartijn.domain.Task;
+import be.ucll.taskmanagermartijn.dto.TaskDTO;
 import be.ucll.taskmanagermartijn.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,7 @@ import javax.validation.Valid;
 
 @Controller
 public class TaskController {
+    @Qualifier("TaskServiceJPA")
     @Autowired
     TaskService tasks;
 
@@ -47,12 +50,12 @@ public class TaskController {
     /* CREATE TASKS */
     @GetMapping("/tasks/new")
     public String newTaskPage(Model model) {
-        model.addAttribute(new Task());
+        model.addAttribute(new TaskDTO());
         model.addAttribute("title", "New Task");
         return "newTask";
     }
     @PostMapping("/tasks/create")
-    public String newTask(@ModelAttribute @Valid Task task, BindingResult bindingResult, Model model){
+    public String newTask(@ModelAttribute @Valid TaskDTO task, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("title", "New Task");
             return "newTask";
@@ -87,7 +90,7 @@ public class TaskController {
     }
 
     @PostMapping("/tasks/{id}/sub/create")
-    public String addSubTask(Model model, @PathVariable("id") int id, @ModelAttribute @Valid Subtask subtask, BindingResult bindingResult) {
+    public String addSubtask(Model model, @PathVariable("id") int id, @ModelAttribute @Valid Subtask subtask, BindingResult bindingResult) {
         model.addAttribute("task", tasks.getTaskById(id));
         if(bindingResult.hasErrors()){
             return "newSubtask";
@@ -96,9 +99,9 @@ public class TaskController {
         return "redirect:/tasks/{id}";
     }
 
-    @GetMapping("/tasks/{id}/sub/delete/{subtitle}")
-    public String deleteSubtask(Model model, @PathVariable("id") int id, @PathVariable("subtitle") String subtitle) {
-        tasks.getTaskById(id).deleteSubtask(subtitle);
+    @GetMapping("/tasks/{id}/sub/delete/{subtaskId}")
+    public String deleteSubtask(Model model, @PathVariable("id") int id, @PathVariable("subtaskId") String subtaskId) {
+        tasks.getTaskById(id).deleteSubtask(subtaskId);
         model.addAttribute("task", tasks.getTaskById(id));
         model.addAttribute("subtask", new Subtask());
 
