@@ -2,6 +2,7 @@ package be.ucll.taskmanagermartijn.service;
 
 import be.ucll.taskmanagermartijn.domain.Subtask;
 import be.ucll.taskmanagermartijn.domain.Task;
+import be.ucll.taskmanagermartijn.dto.SubtaskDTO;
 import be.ucll.taskmanagermartijn.dto.TaskDTO;
 import be.ucll.taskmanagermartijn.repo.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,17 @@ public class TaskServiceJPA implements TaskService {
             dto.setTitle(h.getTitle());
             dto.setDescription(h.getDescription());
             dto.setDateTime(h.getDateTime());
+
+            dto.setSubtasks(h.getSubtasks()
+                    .stream().map(s -> {
+                        SubtaskDTO subtaskDTO = new SubtaskDTO();
+                        subtaskDTO.setId(s.getId());
+                        subtaskDTO.setTitle(s.getTitle());
+                        subtaskDTO.setDescription(s.getDescription());
+
+                        return subtaskDTO;
+                    }).collect(Collectors.toList())
+            );
             return dto;
         }).collect(Collectors.toList());
     }
@@ -42,6 +54,17 @@ public class TaskServiceJPA implements TaskService {
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
         task.setDateTime(taskDTO.getDateTime());
+
+        task.setSubtasks(taskDTO.getSubtasks()
+                .stream().map(s -> {
+                    Subtask subtask = new Subtask();
+                    subtask.setId(s.getId());
+                    subtask.setTitle(s.getTitle());
+                    subtask.setDescription(s.getDescription());
+
+                    return subtask;
+                }).collect(Collectors.toList())
+        );
 
         repository.save(task);
 
@@ -90,4 +113,6 @@ public class TaskServiceJPA implements TaskService {
     public void addSubtask(int mainTaskId, Subtask subtask) {
 
     }
+
+
 }

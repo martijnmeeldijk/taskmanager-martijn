@@ -2,6 +2,7 @@ package be.ucll.taskmanagermartijn.controller;
 
 import be.ucll.taskmanagermartijn.domain.Subtask;
 import be.ucll.taskmanagermartijn.domain.Task;
+import be.ucll.taskmanagermartijn.dto.SubtaskDTO;
 import be.ucll.taskmanagermartijn.dto.TaskDTO;
 import be.ucll.taskmanagermartijn.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,7 @@ public class TaskController {
     @GetMapping("/tasks/{id}/sub/create")
     public String addSubTaskPage(Model model, @PathVariable("id") int id) {
         model.addAttribute("task", tasks.getTaskById(id));
-        model.addAttribute("subtask", new Subtask());
+        model.addAttribute("subtask", new SubtaskDTO());
 
         return "newSubtask";
     }
