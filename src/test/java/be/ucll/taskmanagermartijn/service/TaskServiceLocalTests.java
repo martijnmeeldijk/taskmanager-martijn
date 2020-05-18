@@ -10,6 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class TaskServiceLocalTests {
     @Test
     public void testTaskServiceLocal(){
-      
+
     }
 }
