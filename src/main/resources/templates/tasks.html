@@ -10,8 +10,8 @@
 <main>
     <table class="table">
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Time</th>
+            <th scope="col" th:text="#{Name}"></th>
+            <th scope="col" th:text="#{Time}"></th>
             <th scope="col"></th>
             <th scope="col"></th>
 
@@ -33,11 +33,11 @@
             </td>
         </tr>
         <tr th:if="${tasks == null}">
-            <td>No tasks</td>
-            <td>No tasks</td>
+            <td th:text="#{NoTasks}"></td>
+            <td th:text="#{NoTasks}"></td>
         </tr>
 
-        <a class="btn btn-primary" href="/tasks/new" role="button">Create new task</a>
+        <a class="btn btn-primary" href="/tasks/new" role="button" th:text="#{CreateNewTask}"></a>
     </table>
 </main>
 

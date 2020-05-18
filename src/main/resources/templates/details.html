@@ -17,21 +17,21 @@
 
         </tr>-->
         <tr>
-            <td>Title</td>
+            <td th:text="#{Title}"></td>
             <td th:text="${task.title}"></td>
         </tr>
         <tr>
-            <td>Description</td>
+            <td th:text="#{Description}"></td>
             <td th:text="${task.description}"></td>
         </tr>
         <tr>
-            <td>Due Date</td>
+            <td th:text="#{DueDate}"></td>
             <td th:text="${task.dateTimeString}"></td>
         </tr>
 
     </table>
 
-    <h2 th:if="${!subtasks.empty}">Subtasks</h2>
+    <h2 th:if="${!subtasks.empty}" th:text="#{Subtasks}"></h2>
     <table class="table">
     <tr th:each="subtask : ${subtasks}">
         <td th:text="${subtask.title}"></td>
@@ -43,11 +43,11 @@
         </td>
     </tr>
     <tr th:if="${subtasks == null}">
-        <td>No tasks</td>
-        <td>No tasks</td>
+        <td th:text="#{NoTasks}">No tasks</td>
+        <td th:text="#{NoTasks}">No tasks</td>
     </tr>
     </table>
-    <a class="btn btn-primary" th:href="@{/tasks/{id}/sub/create(id=${task.id})}" role="button">Create new subtask</a>
+    <a class="btn btn-primary" th:href="@{/tasks/{id}/sub/create(id=${task.id})}" role="button" th:text="#{CreateNewSubtask}"></a>
 </main>
 
 </body>
