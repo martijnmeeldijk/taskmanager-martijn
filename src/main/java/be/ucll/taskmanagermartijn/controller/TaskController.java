@@ -52,13 +52,13 @@ public class TaskController {
     @GetMapping("/tasks/new")
     public String newTaskPage(Model model) {
         model.addAttribute(new TaskDTO());
-        model.addAttribute("title", "New Task");
+        model.addAttribute("title", "NewTask");
         return "newTask";
     }
     @PostMapping("/tasks/create")
     public String newTask(@ModelAttribute @Valid TaskDTO task, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
-            model.addAttribute("title", "New Task");
+            model.addAttribute("title", "NewTask");
             return "newTask";
         }
         tasks.addTask(task);
@@ -69,7 +69,7 @@ public class TaskController {
     @GetMapping("/tasks/edit/{id}")
     public String editPage(Model model, @PathVariable("id") int id) {
         model.addAttribute(tasks.getTaskDTOById(id));
-        model.addAttribute("title", "Edit Task");
+        model.addAttribute("title", "EditTask");
         model.addAttribute("edit", true);
         return "newTask";
     }
