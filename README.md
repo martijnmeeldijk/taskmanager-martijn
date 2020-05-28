@@ -12,7 +12,4 @@
 - Beautiful simplistic design
 - Intuitive user interface
 
-### Upcoming features:
 
-- Store all data in external database
-- ...
