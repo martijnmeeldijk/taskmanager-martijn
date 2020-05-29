@@ -11,5 +11,9 @@
 - Delete your tasks
 - Beautiful simplistic design
 - Intuitive user interface
+- A rest API for managing your tasks in your applciation of choice
+- 74% test coverage overall, with a CicleCi pipeline. So don't be afraid of losing your tasks due to programming errors.
+- Multiple language support (EN and NL)
+- Probably the best task manager you could find anywhere!
 
 
