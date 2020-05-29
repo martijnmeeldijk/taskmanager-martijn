@@ -46,5 +46,7 @@ public class TaskDTOTests {
         task.addSubtask(subtask);
 
         assertEquals(subtask, task.getSubtask(2));
+        task.deleteSubtask(subtask.getTitle());
+        assertEquals(0, task.getSubtasks().size());
     }
 }

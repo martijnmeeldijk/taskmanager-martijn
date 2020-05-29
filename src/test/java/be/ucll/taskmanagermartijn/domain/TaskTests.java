@@ -46,5 +46,9 @@ public class TaskTests {
         task.addSubtask(subtask);
 
         assertEquals(subtask, task.getSubtask(2));
+        assertNotNull(task.getSubtasks());
+        task.deleteSubtask(2);
+        assertEquals(task.getSubtasks().size(), 0);
+
     }
 }

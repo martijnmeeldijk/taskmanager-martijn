@@ -22,9 +22,8 @@ public class TaskServiceJPA implements TaskService {
     public TaskServiceJPA(TaskRepository repository) {
         this.repository = repository;
     }
-
-
     @Override
+    @Transactional
     public List<TaskDTO> getTasks() {
         return repository.findAll().stream().map(h -> {
             TaskDTO dto = new TaskDTO();
@@ -46,8 +45,8 @@ public class TaskServiceJPA implements TaskService {
             return dto;
         }).collect(Collectors.toList());
     }
-
     @Override
+    @Transactional
     public void addTask(TaskDTO taskDTO) {
         Task task = new Task();
         task.setId(taskDTO.getId());
@@ -69,8 +68,8 @@ public class TaskServiceJPA implements TaskService {
         repository.save(task);
 
     }
-
     @Override
+    @Transactional
     public TaskDTO getTaskDTOById(int id) {
         Task task = repository.getTaskById(id);
         TaskDTO dto = new TaskDTO();
@@ -92,13 +91,12 @@ public class TaskServiceJPA implements TaskService {
 
         return dto;
     }
-
     public Task getTaskById(int id) {
 
         return repository.getTaskById(id);
     }
-
     @Override
+    @Transactional
     public void addTask(String title, String description, LocalDateTime dateTime) {
         Task task = new Task();
         task.setTitle(title);
@@ -106,19 +104,11 @@ public class TaskServiceJPA implements TaskService {
         task.setDescription(description);
         repository.save(task);
     }
-
     @Override
     @Transactional
     public void deleteTaskById(int id) {
         repository.deleteTaskById(id);
     }
-
-    @Override
-    @Transactional
-    public void deleteTaskByTask(Task task) {
-        repository.delete(task);
-    }
-
     @Override
     @Transactional
     public void editTaskByTaskDTO(TaskDTO taskDTO) {
@@ -140,7 +130,6 @@ public class TaskServiceJPA implements TaskService {
         );
         repository.save(task);
     }
-
     @Override
     @Transactional
     public void addSubtask(int mainTaskId, SubtaskDTO subtaskDTO) {
@@ -154,17 +143,6 @@ public class TaskServiceJPA implements TaskService {
 
         repository.save(task);
     }
-
-    @Override
-    @Transactional
-    public void editTask(Task task) {
-
-
-        repository.deleteTaskById(task.getId());
-        repository.save(task);
-
-    }
-
     @Override
     public void deleteSubtask(int id, int subtaskId) {
         Task task = repository.getTaskById(id);

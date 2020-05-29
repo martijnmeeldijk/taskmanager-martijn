@@ -4,10 +4,13 @@ import be.ucll.taskmanagermartijn.domain.Subtask;
 import be.ucll.taskmanagermartijn.domain.Task;
 import be.ucll.taskmanagermartijn.dto.SubtaskDTO;
 import be.ucll.taskmanagermartijn.dto.TaskDTO;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Service
 public interface TaskService {
 
     List<TaskDTO> getTasks();
@@ -22,9 +25,7 @@ public interface TaskService {
 
     public void deleteTaskById(int id);
 
-    public void deleteTaskByTask(Task task);
 
-    public void editTask(Task task);
 
     public void addSubtask(int mainTaskId, SubtaskDTO subtaskDTO);
 
